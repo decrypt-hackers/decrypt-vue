@@ -3,6 +3,7 @@ const consola = require('consola')
 const mongoose = require('mongoose')
 const app = express()
 const morgan = require('morgan')
+const cors = require('cors')
 const bodyParser = require('body-parser')
 
 const db_user = process.env.DB_USER;
@@ -22,6 +23,7 @@ mongoose.connect('mongodb+srv://' + db_user + ':'
 
 app.use(morgan('dev'))
 app.use(bodyParser.json())
+app.use(cors())
 
 app.use('/queuedPosts', queuedPostsRouter)
 

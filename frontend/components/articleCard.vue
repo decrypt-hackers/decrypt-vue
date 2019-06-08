@@ -11,12 +11,9 @@
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>Click anywhere on card</h4>
+          <h4>{{this.article.title}}</h4>
           <p>
-            Imperdiet dui accumsan sit amet nulla facilisi morbi. Fusce ut
-            placerat orci nulla pellentesque dignissim enim. Libero id faucibus
-            nisl tincidunt eget nullam. Commodo viverra maecenas accumsan lacus
-            vel facilisis.
+            {{this.article.article}}
           </p>
           <span class="button is-link modal-button" data-target="modal-image"
             >Image modal</span
@@ -26,6 +23,18 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    article: {
+      type: Object,
+      required: true
+    }
+  }
+}
+</script>
+
 
 <style>
 .container {

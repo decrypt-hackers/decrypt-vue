@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const queuedPost = new Schema({
-    owner: {
+    author: {
       type: String,
       required: true
     },
-    hash: {
+    post: {
       type: String,
       required: true
     },
@@ -18,10 +18,10 @@ const queuedPost = new Schema({
       type: Number,
       default: 0
     },
-    reviewers: [
+    upReviewers: [
       {
         type: String,
-        required: true
+        required: false
       }
     ]
 },{
