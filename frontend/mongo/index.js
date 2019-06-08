@@ -11,6 +11,7 @@ const db_pass = process.env.DB_PASS;
 // Import and Set Nuxt.js options
 
 const queuedPostsRouter = require('./routers/queuedPostsRouter')
+const usersRouter = require('./routers/usersRouter')
 
 // Connect to Mongo
 mongoose.connect('mongodb+srv://' + db_user + ':' 
@@ -26,5 +27,6 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use('/queuedPosts', queuedPostsRouter)
+app.use('/users', usersRouter)
 
 app.listen('8080')

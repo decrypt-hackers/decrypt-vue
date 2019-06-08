@@ -20,18 +20,7 @@
 export default {
   data() {
     return {
-      articles: [
-        // {
-        //   title: 'test 1',
-        //   article: 'testing 1,2,3',
-        //   author: 'John Doe'
-        // },
-        // {
-        //   title: 'test 2',
-        //   article: 'testing 1,2,3, 4',
-        //   author: 'Bob'
-        // }
-      ]
+      articles: []
     }
   },
   created() {
@@ -49,6 +38,7 @@ export default {
     upvote(article) {
       var url = 'http://localhost:8080/queuedPosts/' + article._id
       article.upvotes += 1
+      article.reviewers.push()
       this.$axios.$put(url, article)
       .then((res) => {
         console.log(res);

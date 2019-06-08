@@ -1,14 +1,17 @@
 <template>
-    <div>
-  <div class="container">
-    <div class="inner">
-      <Header :permission="permission" :readView="read" @showReview="showReview()" @showRead="showRead()"></Header>
-      <ArticleList v-if="read"></ArticleList>
-      <ReviewArticleList v-if="!read"></ReviewArticleList>
+  <div>
+    <div class="container">
+      <div class="inner">
+        <Header :permission="permission" :readView="read" @showReview="showReview()" @showRead="showRead()"></Header>
+        <div v-if="read">
+          <CreateNewPost></CreateNewPost>
+          <ArticleList></ArticleList>
+        </div>
+        <ReviewArticleList v-if="!read"></ReviewArticleList>
+      </div>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </div>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </div>
   </div>
 </template>
 
@@ -16,17 +19,20 @@
 import Header from '../components/Header'
 import ReviewArticleList from '../components/ReviewArticleList'
 import ArticleList from '../components/ArticleList'
+import CreateNewPost from '../components/CreateNewpost'
 
 export default {
   components: {
     Header,
     ReviewArticleList,
-    ArticleList
+    ArticleList,
+    CreateNewPost
   },
   data() {
     return {
       permission: true,
-      read: true
+      read: true,
+      user: ''
     }
   },
   methods: {
