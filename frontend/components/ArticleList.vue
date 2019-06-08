@@ -21,21 +21,18 @@ export default {
   data() {
     return {
       articles: [
-        // {
-        //   title: 'test 1',
-        //   article: 'testing 1,2,3',
-        //   author: 'John Doe'
-        // },
-        // {
-        //   title: 'test 2',
-        //   article: 'testing 1,2,3, 4',
-        //   author: 'Bob'
-        // }
+        {
+          title: 'test 1',
+          article: 'testing 1,2,3',
+          author: 'John Doe'
+        },
+        {
+          title: 'test 2',
+          article: 'testing 1,2,3, 4',
+          author: 'Bob'
+        }
       ]
     }
-  },
-  created() {
-    this.displayArticles()
   },
   methods: {
     displayArticles(){

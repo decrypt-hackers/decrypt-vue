@@ -34,8 +34,8 @@
             <div class="navbar-end">
               <div class="tabs is-right">
                 <ul>
-                  <li class="is-active"><a>Read</a></li>
-                  <li><a href="">Review</a></li>
+                  <li class="is-active"><a @click="read()">Read</a></li>
+                  <li v-if="permission"><a @click="review()">Review</a></li>
                 </ul>
                 <span class="navbar-item">
                   <!-- <div class="buttons has-addons is-right">
@@ -66,6 +66,20 @@ export default {
   components: {},
   data: function() {
     return {}
+  },
+  props: {
+    permission: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    review() {
+      this.$emit("showReview")
+    },
+    read() {
+      this.$emit("showRead")
+    }
   }
 }
 </script>
