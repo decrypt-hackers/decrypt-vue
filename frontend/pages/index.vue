@@ -1,8 +1,9 @@
 <template>
   <div class="container">
-    <div>
-      <Header></Header>
-      <ReviewArticleList></ReviewArticleList>
+    <div class="inner">
+      <Header :permission="permission" @showReview="showReview()" @showRead="showRead()"></Header>
+      <ArticleList v-if="read"></ArticleList>
+      <ReviewArticleList v-if="!read"></ReviewArticleList>
     </div>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -12,15 +13,32 @@
 <script>
 import Header from '../components/Header'
 import ReviewArticleList from '../components/ReviewArticleList'
+import ArticleList from '../components/ArticleList'
+
 export default {
   components: {
     Header,
-    ReviewArticleList
+    ReviewArticleList,
+    ArticleList
+  },
+  data() {
+    return {
+      permission: true,
+      read: true
+    }
+  },
+  methods: {
+    showReview() {
+      this.read = false
+    },
+    showRead() {
+      this.read = true
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .container {
   margin: 0 auto;
   min-height: 100vh;
@@ -47,5 +65,12 @@ export default {
 }
 .links {
   padding-top: 15px;
+}
+.inner {
+  width: 100%;
+}
+.container {
+  padding-left: 0px;
+  padding-right: 0px;
 }
 </style>
