@@ -1,11 +1,8 @@
 <template>
   <div class="container">
     <div>
-      <logo />
-      <h1 class="title">
-        decrypt-vue
-      </h1>
-      <ArticleList></ArticleList>
+      <Header></Header>
+      <ReviewArticleList></ReviewArticleList>
     </div>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -13,12 +10,12 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import ArticleList from '../components/articleList'
+import Header from '../components/Header'
+import ReviewArticleList from '../components/ReviewArticleList'
 export default {
   components: {
-    Logo,
-    ArticleList
+    Header,
+    ReviewArticleList
   }
 }
 </script>
