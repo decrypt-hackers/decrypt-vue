@@ -1,0 +1,12 @@
+{
+  "unique": "13b8265097849dc5201fa888919c0871e10fa284cb7ab8f7d76ba75635767edc835b1e2878637df4",
+  "timestamp": 1559967059,
+  "validatorSet": [
+    {
+      "address": "7c07e1ea6bb5639b9271556cb6572c53f8548134",
+      "power": 1
+    }
+  ],
+  "initApp": "",
+  "startApp": "node src/index.js"
+}
