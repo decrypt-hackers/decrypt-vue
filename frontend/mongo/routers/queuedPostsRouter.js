@@ -1,5 +1,5 @@
 let express = require('express')
-let  bodyParser = require('body-parser')
+let bodyParser = require('body-parser')
 let queuedPosts = require('../models/queuedPost')
 
 const queuedPostsRouter = express.Router()
@@ -27,12 +27,14 @@ queuedPostsRouter.route('/')
 })
 .delete((req, res, next) => {
     queuedPosts.remove({})
-    .then((queuedPost) => {
-        console.log('All Lunches Deleted')
+      .then(
+        queuedPost => {
         res.statusCode = 200
         res.setHeader('Content-Type', 'application/json')
         res.json(queuedPost)
-    }, (err) => next(err))
+        },
+        err => next(err)
+      )
     .catch((err) => next(err))
 });
 
