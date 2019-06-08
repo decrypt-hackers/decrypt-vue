@@ -27,10 +27,7 @@
     "express": "^4.16.4",
     "mongoose": "^5.5.13",
     "nuxt": "^2.0.0",
-<<<<<<< HEAD
     "nuxt-fontawesome": "^0.4.0"
-=======
->>>>>>> 5cd437c1e35882a50bbabac5725e6b08cc7e2618
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
