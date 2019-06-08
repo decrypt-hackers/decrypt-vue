@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>balance: {{ balance }}</p>
     <button @click="review">review</button>
     <div v-for="post in posts" :key="post.hash">
       <p>
@@ -22,17 +23,20 @@ export default {
     return {
       easy: null,
       posts: [],
-      vote: {}
+      vote: {},
+      balance: 0
     }
   },
   async mounted() {
     if (process.browser) {
-      console.log(Web3.givenProvider) // eslint-disable-line
-      await window.ethereum.enable() // eslint-disable-line
-      const easy = new EasyClientForWeb3(Web3.givenProvider, location.origin)
-      this.easy = easy
+      if (Web3.givenProvider) {
+        await window.ethereum.enable() // eslint-disable-line
+        const easy = new EasyClientForWeb3(Web3.givenProvider, location.origin)
+        this.easy = easy
+      }
     }
     this.getMessage()
+    this.getBalance()
     await this.getPosts()
     this.getVote()
   },
@@ -58,12 +62,29 @@ export default {
         })
       }
     },
+    async getBalance() {
+      if (!this.easy) return
+
+      const address = window.ethereum.selectedAddress
+
+      const response = await this.easy.get('/api/balance', {
+        params: {
+          address
+        }
+      })
+
+      this.balance = response.data.balance
+
+      console.log('getBalance', response.data) // eslint-disable-line
+    },
     async getPosts() {
+      if (!this.easy) return
       const response = await this.easy.get('/api/posts')
       this.posts = response.data.posts
       console.log('getPosts', response.data) // eslint-disable-line
     },
     async getMessage() {
+      if (!this.easy) return
       const response = await this.easy.get('/api/post', {
         params: {
           hash: '0x0000'
@@ -72,6 +93,7 @@ export default {
       console.log('getMessage', response.data) // eslint-disable-line
     },
     async getUpvote(hash) {
+      if (!this.easy) return
       const response = await this.easy.get('/api/upvote', {
         params: {
           hash
@@ -81,6 +103,7 @@ export default {
       console.log('getUpvote', response.data) // eslint-disable-line
     },
     async upvote(hash) {
+      if (!this.easy) return
       const response = await this.easy.post(
         '/api/upvote',
         { hash },
@@ -90,6 +113,7 @@ export default {
       this.getVote()
     },
     async getDownvote(hash) {
+      if (!this.easy) return
       const response = await this.easy.get('/api/downvote', {
         params: {
           hash
@@ -99,6 +123,7 @@ export default {
       console.log('getDownvote', response.data) // eslint-disable-line
     },
     async downvote(hash) {
+      if (!this.easy) return
       console.log(hash) // eslint-disable-line
       const response = await this.easy.post(
         '/api/downvote',

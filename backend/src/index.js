@@ -1,8 +1,6 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const Memcached = require("memcached")
-// const keccak = require('keccak')
-// const axios = require('axios')
 
 const APP_HOST = '0.0.0.0'
 const APP_PORT = 5650
@@ -175,6 +173,20 @@ app.post('/api/downvote', async (req, res) => {
   })
 
   res.send({ hash })
+})
+
+app.get('/api/balance', async (req, res) => {
+  const { address } = req.query
+  
+  const balance = await new Promise((resolve, reject) => {
+    memcached.get(`balance:${address}`, (err, result) => {
+      if (err) return reject(err)
+      if (typeof result === 'number') return resolve(result)
+      resolve(0)
+    })
+  })
+
+  res.send({ balance })
 })
 
 app.listen(APP_PORT, APP_HOST)
