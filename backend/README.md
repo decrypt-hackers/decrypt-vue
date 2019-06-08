@@ -5,6 +5,11 @@ nodenv install
 npm install -g @uniqys/cli
 ```
 
+# resolve dependencies
+```
+npm install
+```
+
 # start backend server
 
 ```

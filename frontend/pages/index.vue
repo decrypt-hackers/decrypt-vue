@@ -2,6 +2,7 @@
   <div class="container">
     <div>
       <logo />
+      <uniqys-test />
       <h1 class="title">
         decrypt-vue
       </h1>
@@ -25,10 +26,12 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
+import UniqysTest from '~/components/UniqysTest.vue'
 
 export default {
   components: {
-    Logo
+    Logo,
+    UniqysTest
   }
 }
 </script>

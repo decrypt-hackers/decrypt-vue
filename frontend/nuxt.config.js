@@ -37,8 +37,19 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/proxy'
   ],
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8080',
+      changeOrigin: true
+    },
+    '/uniqys': {
+      target: 'http://localhost:8080',
+      changeOrigin: true
+    }
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

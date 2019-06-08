@@ -24,4 +24,32 @@ app.get('/api/hello', async (req, res) => {
   res.send('Hello, world!')
 })
 
+function getMessage () {
+  return new Promise((resolve, reject) => {
+    memcached.get('message', (err, result) => {
+      if (err) return reject(err)
+      if (typeof result === 'string') return resolve(result)
+      resolve('')
+    })
+  })
+}
+
+app.get('/api/message', async (req, res) => {
+  const message = await getMessage()
+  res.send(message)
+})
+
+app.post('/api/message', async (req, res) => {
+  const { message } = req.body
+
+  memcached.set('message', message, 0, (err) => {
+    if (err) {
+      res.status(400).send(err)
+    }
+    else {
+      res.sendStatus(200)
+    }
+  })
+})
+
 app.listen(APP_PORT, APP_HOST)
