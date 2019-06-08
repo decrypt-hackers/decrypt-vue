@@ -12,7 +12,6 @@ import Web3 from 'web3'
 export default {
   data() {
     return {
-      message: '',
       easy: null
     }
   },
@@ -26,13 +25,21 @@ export default {
     this.getMessage()
   },
   methods: {
-    send() {
-      console.log(this.message) // eslint-disable-line
-      this.easy.post('/api/message', { message: this.message }, { sign: true })
+    async send() {
+      const response = await this.easy.post(
+        '/api/post',
+        { post: { hash: '0x0000' } },
+        { sign: true }
+      )
+      console.log(response.data) // eslint-disable-line
     },
     async getMessage() {
-      const data = await this.easy.get('/api/message')
-      console.log({ data }) // eslint-disable-line
+      const response = await this.easy.get('/api/post', {
+        params: {
+          hash: '0x0000'
+        }
+      })
+      console.log(response.data) // eslint-disable-line
     }
   }
 }

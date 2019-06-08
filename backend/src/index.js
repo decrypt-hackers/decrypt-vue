@@ -34,6 +34,16 @@ function getMessage () {
   })
 }
 
+function getPost (hash) {
+  return new Promise((resolve, reject) => {
+    memcached.get(`post:${hash}`, (err, result) => {
+      if (err) return reject(err)
+      if (typeof result === 'object') return resolve(result)
+      resolve([])
+    })
+  })
+}
+
 app.get('/api/message', async (req, res) => {
   const message = await getMessage()
   res.send(message)
@@ -50,6 +60,32 @@ app.post('/api/message', async (req, res) => {
       res.sendStatus(200)
     }
   })
+})
+
+app.get('/api/post', async (req, res) => {
+  const { hash } = req.query
+  const post = await getPost(hash)
+  res.send(post)
+})
+
+app.post('/api/post', async (req, res) => {
+  const { post } = req.body
+  const sender = req.header('uniqys-sender')
+  const hash = post.hash
+  const data = {
+    reviewer: sender,
+    post,
+    hash
+  }
+
+  await new Promise((resolve, reject) => {
+    memcached.set(`post:${hash}`, data, 0, (err) => {
+      if (err) reject(err)
+      else resolve(data)
+    })
+  })
+
+  res.send(data)
 })
 
 app.listen(APP_PORT, APP_HOST)
