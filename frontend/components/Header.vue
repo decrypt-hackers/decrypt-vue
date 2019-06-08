@@ -18,16 +18,17 @@
           </div>
           <div id="navbarMenu" class="navbar-menu">
             <div class="section">
-              <div class="field has-addons">
+              <div class="field has-addons" v-if="readView">
                 <div class="control is-expanded">
                   <input
-                    class="input has-text-centered"
+                    v-model="filter"
+                    class="input"
                     type="search"
-                    placeholder=""
+                    placeholder="Type Username"
                   />
                 </div>
                 <div class="control">
-                  <a class="button is-light">Search</a>
+                  <a @click="filterView()" class="button is-light"><div id='searchtext'>Search by User</div></a>
                 </div>
               </div>
             </div>
@@ -65,12 +66,18 @@
 export default {
   components: {},
   data: function() {
-    return {}
+    return {
+      filter: ''
+    }
   },
   props: {
     permission: {
       type: Boolean,
       default: false
+    },
+    readView: {
+      type: Boolean,
+      required: true
     }
   },
   methods: {
@@ -79,7 +86,19 @@ export default {
     },
     read() {
       this.$emit("showRead")
+    },
+    filterView() {
+      
     }
   }
 }
 </script>
+
+<style scoped>
+#searchtext {
+  color: #209cee;
+}
+.hero .is-info .is-medium .is-bold {
+  padding-top: 0px;
+}
+</style>

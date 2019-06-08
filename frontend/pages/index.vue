@@ -2,7 +2,7 @@
     <div>
   <div class="container">
     <div class="inner">
-      <Header :permission="permission" @showReview="showReview()" @showRead="showRead()"></Header>
+      <Header :permission="permission" :readView="read" @showReview="showReview()" @showRead="showRead()"></Header>
       <ArticleList v-if="read"></ArticleList>
       <ReviewArticleList v-if="!read"></ReviewArticleList>
     </div>

@@ -71,6 +71,7 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding-top: 0px;
 }
 
 .title {
