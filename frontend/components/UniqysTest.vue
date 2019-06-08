@@ -1,11 +1,14 @@
 <template>
   <div>
     <button @click="review">review</button>
-    <div>
-      <p>data: { hash: '0x0000' }</p>
-      <button @click="upvote">+1</button> <span>{{ currentUpvote }}</span>
-      <button @click="downvote">-1</button> <span>{{ currentDownvote }}</span>
-      <!--<button @click="downvote">+1</button>-->
+    <div v-for="post in posts" :key="post.hash">
+      <p>
+        {{ post.hash }}
+        <button @click="upvote(post.hash)">+1</button>
+        <span>{{ vote[post.hash] ? vote[post.hash].upvote : 0 }}</span>
+        <button @click="downvote(post.hash)">-1</button>
+        <span>{{ vote[post.hash] ? vote[post.hash].downvote : 0 }}</span>
+      </p>
     </div>
   </div>
 </template>
@@ -19,7 +22,9 @@ export default {
     return {
       easy: null,
       currentUpvote: 0,
-      currentDownvote: 0
+      currentDownvote: 0,
+      posts: [],
+      vote: {}
     }
   },
   async mounted() {
@@ -30,17 +35,35 @@ export default {
       this.easy = easy
     }
     this.getMessage()
-    this.getUpvote()
-    this.getDownvote()
+    await this.getPosts()
+    this.getVote()
   },
   methods: {
     async review() {
+      const date = new Date()
       const response = await this.easy.post(
         '/api/post',
-        { post: { hash: '0x0000' } },
+        { post: { hash: date.getMilliseconds() } },
         { sign: true }
       )
-      console.log(response.data) // eslint-disable-line
+      await this.getPosts()
+      console.log('review', response.data) // eslint-disable-line
+    },
+    async getVote() {
+      for (const post of this.posts) {
+        const upvote = await this.getUpvote(post.hash)
+        const downvote = await this.getDownvote(post.hash)
+        console.log(post.hash, upvote, downvote) // eslint-disable-line
+        this.$set(this.vote, post.hash, {
+          upvote,
+          downvote
+        })
+      }
+    },
+    async getPosts() {
+      const response = await this.easy.get('/api/posts')
+      this.posts = response.data.posts
+      console.log('getPosts', response.data) // eslint-disable-line
     },
     async getMessage() {
       const response = await this.easy.get('/api/post', {
@@ -48,43 +71,44 @@ export default {
           hash: '0x0000'
         }
       })
-      console.log(response.data) // eslint-disable-line
+      console.log('getMessage', response.data) // eslint-disable-line
     },
-    async getUpvote() {
+    async getUpvote(hash) {
       const response = await this.easy.get('/api/upvote', {
         params: {
-          hash: '0x0000'
+          hash
         }
       })
-      this.currentUpvote = response.data.upvote
-      console.log(response.data) // eslint-disable-line
+      return response.data.upvote
+      console.log('getUpvote', response.data) // eslint-disable-line
     },
-    async upvote() {
+    async upvote(hash) {
       const response = await this.easy.post(
         '/api/upvote',
-        { hash: '0x0000' },
+        { hash },
         { sign: true }
       )
-      console.log(response.data) // eslint-disable-line
-      this.getUpvote()
+      console.log('upvote', response.data) // eslint-disable-line
+      this.getVote()
     },
-    async getDownvote() {
+    async getDownvote(hash) {
       const response = await this.easy.get('/api/downvote', {
         params: {
-          hash: '0x0000'
+          hash
         }
       })
-      this.currentDownvote = response.data.downvote
-      console.log(response.data) // eslint-disable-line
+      return response.data.downvote
+      console.log('getDownvote', response.data) // eslint-disable-line
     },
-    async downvote() {
+    async downvote(hash) {
+      console.log(hash) // eslint-disable-line
       const response = await this.easy.post(
         '/api/downvote',
-        { hash: '0x0000' },
+        { hash },
         { sign: true }
       )
-      console.log(response.data) // eslint-disable-line
-      this.getDownvote()
+      console.log('downvote', response.data) // eslint-disable-line
+      this.getVote()
     }
   }
 }

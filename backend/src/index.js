@@ -44,6 +44,16 @@ function getPost (hash) {
   })
 }
 
+function getPosts () {
+  return new Promise((resolve, reject) => {
+    memcached.get(`posts`, (err, result) => {
+      if (err) return reject(err)
+      if (typeof result === 'object') return resolve(result)
+      resolve([])
+    })
+  })
+}
+
 app.get('/api/message', async (req, res) => {
   const message = await getMessage()
   res.send(message)
@@ -60,6 +70,11 @@ app.post('/api/message', async (req, res) => {
       res.sendStatus(200)
     }
   })
+})
+
+app.get('/api/posts', async (req, res) => {
+  const posts = await getPosts()
+  res.send({ posts })
 })
 
 app.get('/api/post', async (req, res) => {
@@ -87,7 +102,16 @@ app.post('/api/post', async (req, res) => {
     })
   })
 
-  res.send(data)
+  const posts = await getPosts()
+
+  await new Promise((resolve, reject) => {
+    memcached.set(`posts`, [...posts, data], 0, (err) => {
+      if (err) reject(err)
+      else resolve(data)
+    })
+  })
+
+  res.send(posts)
 })
 
 app.get('/api/upvote', async (req, res) => {
@@ -153,7 +177,7 @@ app.post('/api/downvote', async (req, res) => {
     })
   })
 
-  res.sendStatus(200)
+  res.send({ hash })
 })
 
 app.listen(APP_PORT, APP_HOST)
