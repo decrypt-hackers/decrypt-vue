@@ -27,7 +27,7 @@
                   />
                 </div>
                 <div class="control">
-                  <a class="button is-info">Search</a>
+                  <a class="button is-light">Search</a>
                 </div>
               </div>
             </div>
@@ -45,6 +45,12 @@
                     >
                     <span class="button">Read</span>
                   </div> -->
+                  <span class="icon">
+                    <font-awesome-icon
+                      icon="user"
+                      style="font-size: 25px; color: white;"
+                    />
+                  </span>
                 </span>
               </div>
             </div>
