@@ -36,7 +36,6 @@
                 <ul>
                   <li class="is-active"><a>Read</a></li>
                   <li><a href="">Review</a></li>
-                  <li><a href="">Help</a></li>
                 </ul>
                 <span class="navbar-item">
                   <!-- <div class="buttons has-addons is-right">
