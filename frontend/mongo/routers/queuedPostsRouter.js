@@ -48,6 +48,15 @@ queuedPostsRouter.route('/:id')
     }, (err) => next(err))
     .catch((err) => next(err))
 })
+.put((req, res, next) => {
+    queuedPosts.findByIdAndUpdate(req.params.id, req.body)
+    .then((queuedPost) => {
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'application/json')
+        res.json(queuedPost)
+    }, (err) => next(err))
+    .catch((err) => next(err))
+})
 .delete((req, res, next) => {
     queuedPosts.findByIdAndDelete(req.params.id)
     .then((queuedPost) => {
