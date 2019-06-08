@@ -78,6 +78,8 @@ app.post('/api/post', async (req, res) => {
     hash
   }
 
+  // token code here
+
   await new Promise((resolve, reject) => {
     memcached.set(`post:${hash}`, data, 0, (err) => {
       if (err) reject(err)
@@ -86,6 +88,72 @@ app.post('/api/post', async (req, res) => {
   })
 
   res.send(data)
+})
+
+app.get('/api/upvote', async (req, res) => {
+  const { hash } = req.query
+
+  const upvote = await new Promise((resolve, reject) => {
+    memcached.get(`post:${hash}:upvote`, (err, result) => {
+      if (err) return reject(err)
+      if (typeof result === 'number') return resolve(result)
+      resolve(0)
+    })
+  })
+
+  res.send({ upvote })
+})
+
+app.post('/api/upvote', async (req, res) => {
+  const { hash } = req.body
+
+  // token code here
+
+  await new Promise((resolve, reject) => {
+    memcached.incr(`post:${hash}:upvote`, 1, (err, result) => {
+      if (err) return reject(err)
+      if (typeof result === 'number') return resolve(result)
+      memcached.set(`post:${hash}:upvote`, 1, 0, (err) => {
+        if (err) return reject(err)
+        resolve(1)
+      })
+    })
+  })
+
+  res.sendStatus(200)
+})
+
+app.get('/api/downvote', async (req, res) => {
+  const { hash } = req.query
+
+  const downvote = await new Promise((resolve, reject) => {
+    memcached.get(`post:${hash}:downvote`, (err, result) => {
+      if (err) return reject(err)
+      if (typeof result === 'number') return resolve(result)
+      resolve(0)
+    })
+  })
+
+  res.send({ downvote })
+})
+
+app.post('/api/downvote', async (req, res) => {
+  const { hash } = req.body
+
+  // token code here
+
+  await new Promise((resolve, reject) => {
+    memcached.incr(`post:${hash}:downvote`, 1, (err, result) => {
+      if (err) return reject(err)
+      if (typeof result === 'number') return resolve(result)
+      memcached.set(`post:${hash}:downvote`, 1, 0, (err) => {
+        if (err) return reject(err)
+        resolve(1)
+      })
+    })
+  })
+
+  res.sendStatus(200)
 })
 
 app.listen(APP_PORT, APP_HOST)
