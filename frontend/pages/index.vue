@@ -6,7 +6,7 @@
         decrypt-vue
       </h1>
       <h2 class="subtitle">
-        My mind-blowing Nuxt.js project
+        My primo Nuxt.js project
       </h2>
       <div class="links">
         <a href="https://nuxtjs.org/" target="_blank" class="button--green"
