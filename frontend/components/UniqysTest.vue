@@ -11,6 +11,7 @@
         <span>{{ vote[post.hash] ? vote[post.hash].downvote : 0 }}</span>
       </p>
     </div>
+    <button @click="tap">coin faucet</button>
   </div>
 </template>
 
@@ -124,7 +125,6 @@ export default {
     },
     async downvote(hash) {
       if (!this.easy) return
-      console.log(hash) // eslint-disable-line
       const response = await this.easy.post(
         '/api/downvote',
         { hash },
@@ -132,6 +132,12 @@ export default {
       )
       console.log('downvote', response.data) // eslint-disable-line
       this.getVote()
+    },
+    async tap() {
+      if (!this.easy) return
+      const response = await this.easy.post('/api/tap', {}, { sign: true })
+      console.log('tap', response.data) // eslint-disable-line
+      this.getBalance()
     }
   }
 }

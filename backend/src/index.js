@@ -42,6 +42,19 @@ function getPosts () {
   })
 }
 
+async function addBalance(address, amount) {
+  await new Promise((resolve, reject) => {
+    memcached.incr(`balance:${address}`, amount, (err, result) => {
+      if (err) return reject(err)
+      if (typeof result === 'number') return resolve(result)
+      memcached.set(`balance:${address}`, amount, 0, (err) => {
+        if (err) return reject(err)
+        resolve(amount)
+      })
+    })
+  })
+}
+
 app.get('/api/message', async (req, res) => {
   const message = await new Promise((resolve, reject) => {
     memcached.get('message', (err, result) => {
@@ -185,6 +198,14 @@ app.get('/api/balance', async (req, res) => {
       resolve(0)
     })
   })
+
+  res.send({ balance })
+})
+
+app.post('/api/tap', async (req, res) => {
+  const sender = req.header('uniqys-sender')
+
+  const balance = await addBalance(`0x${sender}`, 1000)
 
   res.send({ balance })
 })
