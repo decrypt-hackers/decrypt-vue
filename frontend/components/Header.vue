@@ -35,8 +35,8 @@
             <div class="navbar-end">
               <div class="tabs is-right">
                 <ul>
-                  <li class="is-active"><a @click="read()">Read</a></li>
-                  <li v-if="permission"><a @click="review()">Review</a></li>
+                  <li :class="{ 'is-active' : !readView}"><a @click="read()">Read</a></li>
+                  <li :class="{ 'is-active' : readView}" v-if="permission"><a @click="review()">Review</a></li>
                 </ul>
                 <span class="navbar-item">
                   <!-- <div class="buttons has-addons is-right">
@@ -98,7 +98,5 @@ export default {
 #searchtext {
   color: #209cee;
 }
-.hero .is-info .is-medium .is-bold {
-  padding-top: 0px;
-}
+
 </style>

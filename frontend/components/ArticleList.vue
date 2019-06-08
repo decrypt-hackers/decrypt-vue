@@ -36,28 +36,13 @@ export default {
   },
   methods: {
     displayArticles(){
-      var url = 'http://localhost:8080/queuedPosts'
-      this.$axios.$get(url)
-      .then((res) => {
-        this.articles = res;
-        console.log(res);
-      });
+      
     },
     upvote(article) {
-      var url = 'http://localhost:8080/queuedPosts/' + article._id
-      article.upvotes += 1
-      this.$axios.$put(url, article)
-      .then((res) => {
-        console.log(res);
-      });
+     
     },
     downvote(article) {
-      var url = 'http://localhost:8080/queuedPosts/' + article._id
-      article.downvotes += 1
-      this.$axios.$put(url, article)
-      .then((res) => {
-        console.log(res);
-      });
+      
     }
   }
 }
@@ -72,28 +57,6 @@ export default {
   align-items: center;
   text-align: center;
   padding-top: 0px;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
 }
 
 button {

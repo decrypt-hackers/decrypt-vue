@@ -57,17 +57,12 @@ export default {
             axios.post(url, newPost)
             .then(() => {
                 this.clearField();
-                this.refreshList();
                 this.toggle();
             })
             .catch((err) => console.log(err))
         },
         clearField(){
             this.post=''
-        },
-        refreshList(){
-            console.log('please emit:(')
-            bus.$emit('refreshList');
         }
     }
 }
@@ -75,22 +70,29 @@ export default {
 
 <style scoped>
 .fields {
-    background-color: rgba(204, 255, 204, 0.3);
+    background-color: rgba(32, 156, 238, 0.8);
     margin: 10px 15px 10px 15px;
     border-radius: 12px;
 }
 input {
     margin: 10px 15px 10px 15px;
+    width: 60%;
+    height: 70px;
+    padding-bottom: 40px;
 }
 button {
     display: block;
     margin-left: auto;
     margin-right: auto;
     border-radius: 12px;
-    background-color: white;
+    background-color: #209cee;
+    border-color: #209cee;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 button:hover {
-    background-color:rgba(204, 255, 204, 0.1);
+    background-color: rgba(32, 156, 238, 0.8);
+    transition-duration: 0.5s;
 }
 .warning {
     color:  red;
