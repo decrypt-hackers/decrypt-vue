@@ -36,8 +36,7 @@ module.exports = {
     '@nuxtjs/bulma',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/pwa'
   ],
   /*
    ** Axios module configuration
