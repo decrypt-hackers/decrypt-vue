@@ -24,16 +24,6 @@ app.get('/api/hello', async (req, res) => {
   res.send('Hello, world!')
 })
 
-function getMessage () {
-  return new Promise((resolve, reject) => {
-    memcached.get('message', (err, result) => {
-      if (err) return reject(err)
-      if (typeof result === 'string') return resolve(result)
-      resolve('')
-    })
-  })
-}
-
 function getPost (hash) {
   return new Promise((resolve, reject) => {
     memcached.get(`post:${hash}`, (err, result) => {
@@ -55,7 +45,13 @@ function getPosts () {
 }
 
 app.get('/api/message', async (req, res) => {
-  const message = await getMessage()
+  const message = await new Promise((resolve, reject) => {
+    memcached.get('message', (err, result) => {
+      if (err) return reject(err)
+      if (typeof result === 'string') return resolve(result)
+      resolve('')
+    })
+  })
   res.send(message)
 })
 
@@ -103,15 +99,16 @@ app.post('/api/post', async (req, res) => {
   })
 
   const posts = await getPosts()
+  const newPosts = [...posts, data]
 
   await new Promise((resolve, reject) => {
-    memcached.set(`posts`, [...posts, data], 0, (err) => {
+    memcached.set(`posts`, newPosts, 0, (err) => {
       if (err) reject(err)
       else resolve(data)
     })
   })
 
-  res.send(posts)
+  res.send(newPosts)
 })
 
 app.get('/api/upvote', async (req, res) => {

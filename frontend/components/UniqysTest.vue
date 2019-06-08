@@ -21,8 +21,6 @@ export default {
   data() {
     return {
       easy: null,
-      currentUpvote: 0,
-      currentDownvote: 0,
       posts: [],
       vote: {}
     }
