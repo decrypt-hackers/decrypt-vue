@@ -8,5 +8,5 @@
     }
   ],
   "initApp": "",
-  "startApp": "node src/index.js"
+  "startApp": "node src/uniqys.js"
 }
