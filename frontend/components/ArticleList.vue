@@ -15,7 +15,11 @@
             <div class="content">
               {{ article.post.post }}
             </div>
-            <p>reviewer: {{ article.reviewer }}</p>
+                <font-awesome-icon
+                    icon="glasses"
+                    style="font-size: 18px; color: grey;"
+                  />
+            <span style="color:grey;"> {{ article.reviewer }}</span>
             <nav class="level is-mobile">
               <div class="level-right" />
               <div class="level-left">

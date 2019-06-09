@@ -23,8 +23,13 @@
                   />
                 </div>
                 <div class="control">
-                  <a class="button is-light" @click="filterView()"
-                    ><div id="searchtext">Search by User</div></a
+                  <a class="button is-dark" @click="filterView()"
+                    >
+                                        <font-awesome-icon
+                      icon="search"
+                      style="font-size: 25px; color: ;"
+                    />
+</a
                   >
                 </div>
               </div>
