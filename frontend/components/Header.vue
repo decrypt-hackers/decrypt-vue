@@ -6,19 +6,14 @@
           <div class="navbar-brand">
             <a class="navbar-item" href="../">
               <img
-                src="http://bulma.io/images/bulma-type-white.png"
+                src="../assets/logo.png"
                 alt="Logo"
               />
             </a>
-            <span class="navbar-burger burger" data-target="navbarMenu">
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
           </div>
           <div id="navbarMenu" class="navbar-menu">
             <div class="section">
-              <div class="field has-addons" v-if="readView">
+              <div v-if="readView" class="field has-addons">
                 <div class="control is-expanded">
                   <input
                     v-model="filter"
@@ -28,7 +23,9 @@
                   />
                 </div>
                 <div class="control">
-                  <a @click="filterView()" class="button is-light"><div id='searchtext'>Search by User</div></a>
+                  <a class="button is-light" @click="filterView()"
+                    ><div id="searchtext">Search by User</div></a
+                  >
                 </div>
               </div>
             </div>
@@ -36,7 +33,7 @@
               <div class="tabs is-right">
                 <ul>
                   <li :class="{ 'is-active' : !readView}"><a @click="read()">Read</a></li>
-                  <li :class="{ 'is-active' : readView}" v-if="permission"><a @click="review()">Review</a></li>
+                  <li :class="{ 'is-active' : !readView}" v-if="permission"><a @click="review()">Review</a></li>
                 </ul>
                 <span class="navbar-item">
                   <!-- <div class="buttons has-addons is-right">
@@ -90,14 +87,12 @@ export default {
   },
   methods: {
     review() {
-      this.$emit("showReview")
+      this.$emit('showReview')
     },
     read() {
-      this.$emit("showRead")
+      this.$emit('showRead')
     },
-    filterView() {
-      
-    },
+    filterView() {},
     async getBalance() {
       if (!this.$easy.easy) return
 
@@ -121,5 +116,4 @@ export default {
 #searchtext {
   color: #209cee;
 }
-
 </style>

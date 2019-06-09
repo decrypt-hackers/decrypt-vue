@@ -1,29 +1,47 @@
 <template>
   <section class="container">
     <ul>
-      <li v-for="article in articles" class="list-group-item" :key="article.hash">
-        <h2>
-          <b>@{{ article.post.author }}</b>
-        </h2>
-        <br />
-        <h1>{{ article.post.post }}</h1>
-        <p>reviewer: {{ article.reviewer }}</p>
-
-        <progress class="progress" value="15" max="100">15%</progress>
-        <button @click="downvote(article.hash)">
-          <font-awesome-icon
-            icon="thumbs-down"
-            style="font-size: 25px; color: hsl(204, 86%, 53%);"
-          />
-        </button>
-        {{ vote[article.hash] ? vote[article.hash].downvote : 0 }}
-        <button @click="upvote(article.hash)">
-          <font-awesome-icon
-            icon="thumbs-up"
-            style="font-size: 25px; color: hsl(204, 86%, 53%);"
-          />
-        </button>
-        {{ vote[article.hash] ? vote[article.hash].upvote : 0 }}
+      <li v-for="article in articles" class="list-group-item">
+        <article class="media">
+          <figure class="media-left">
+            <figure class="image is-128x128">
+              <center>
+                <img class="is-square avatar" src="~/assets/random/3.jpg" />
+                <div style="color:grey;">@{{ article.post.author }}</div>
+              </center>
+            </figure>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              {{ article.post.post }}
+            </div>
+            <p>reviewer: {{ article.reviewer }}</p>
+            <nav class="level is-mobile">
+              <div class="level-right" />
+              <div class="level-left">
+                <button @click="downvote(article.hash)">
+                  <font-awesome-icon
+                    icon="thumbs-down"
+                    style="font-size: 25px; color: hsl(204, 86%, 53%);"
+                  />
+                </button>
+                {{ vote[article.hash] ? vote[article.hash].downvote : 0 }}
+                <button @click="upvote(article.hash)">
+                  <font-awesome-icon
+                    icon="thumbs-up"
+                    style="font-size: 25px; color: hsl(204, 86%, 53%);"
+                  />
+                </button>
+                {{ vote[article.hash] ? vote[article.hash].upvote : 0 }}
+              </div>
+            </nav>
+            <progress
+              class="progress is-info"
+              :value="vote[article.hash] ? vote[article.hash].upvote : 0"
+              :max="(vote[article.hash] ? vote[article.hash].upvote : 0) + (vote[article.hash] ? vote[article.hash].downvote : 0)"
+              ></progress>
+          </div>
+        </article>
       </li>
     </ul>
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" />
@@ -108,6 +126,12 @@ export default {
 </script>
 
 <style scoped>
+.avatar {
+  vertical-align: middle;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+}
 .container {
   margin: 0 auto;
   min-height: 100vh;

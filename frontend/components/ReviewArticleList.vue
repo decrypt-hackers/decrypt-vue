@@ -1,26 +1,33 @@
 <template>
   <section class="container">
-      <ul>
-        <li class="list-group-item" v-for="article in articles">
-            <h2><b>@{{article.author}}</b></h2> <br />
-            <h1>{{article.post}}</h1>
-            {{article.upvotes}}
-            <button><i @click="upvote(article)" class="em em-arrow_up"></i></button>
-            {{article.downvotes}}
-            <button><i @click="downvote(article)" class="em em-arrow_down"></i></button>
-        </li>
-      </ul>
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <ul>
+      <li v-for="article in articles" class="list-group-item">
+        <h2>
+          <b>@{{ article.author }}</b>
+        </h2>
+        <br />
+        <h1>{{ article.post }}</h1>
+        <button><i class="em em-white_check_mark" @click="accept(article)"></i></button>
+        <button>
+          <i class="em em-no_entry" @click="decline(article)"></i>
+        </button>
+      </li>
+    </ul>
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" />
   </section>
 </template>
 
 <script>
-// import axios from 'axios'
-
 export default {
   data() {
     return {
       articles: []
+    }
+  },
+  props: {
+    user: {
+      type: String,
+      default: 'John Doe'
     }
   },
   async created() {
@@ -30,15 +37,14 @@ export default {
     }
   },
   methods: {
-    displayArticles(){
-      var url = 'http://localhost:8080/queuedPosts'
-      this.$axios.$get(url)
-      .then((res) => {
-        this.articles = res;
-        console.log(res);
-      });
+    displayArticles() {
+      const url = 'http://localhost:8080/queuedPosts'
+      this.$axios.$get(url).then(res => {
+        this.articles = res
+        console.log(res)
+      })
     },
-    async upvote(article) {
+    async accept(article) {
       const date = new Date()
 
       try {
@@ -52,26 +58,30 @@ export default {
           },
           { sign: true }
         )
+        window.alert('ブロックチェーンに投稿されました')
         console.log('review', response.data)
       } catch (e) {
         return
       }
 
-      var url = 'http://localhost:8080/queuedPosts/' + article._id
-      article.upvotes += 1
-      // article.reviewers.push()
-      this.$axios.$put(url, article)
+      var url = "http://localhost:8080/queuedPosts"
+      article.reviewer = this.user
+      // Replace with post on blockchain
+      console.log(article)
+      this.$axios.$delete(url, article._id)
       .then((res) => {
         console.log(res);
       });
+      this.displayArticles()
     },
-    downvote(article) {
-      var url = 'http://localhost:8080/queuedPosts/' + article._id
-      article.downvotes += 1
-      this.$axios.$put(url, article)
+    decline(article) {
+      window.alert('投稿を拒否しました')
+      var url = "http://localhost:8080/queuedPosts"
+      this.$axios.$delete(url, article._id)
       .then((res) => {
         console.log(res);
       });
+      this.displayArticles()
     }
   }
 }
