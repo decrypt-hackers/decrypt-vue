@@ -2,27 +2,30 @@
   <section class="container">
     <ul>
       <li v-for="article in articles" class="list-group-item">
-        <h2>
-          <b>@{{ article.author }}</b>
-        </h2>
+        <figure class="image is-128x128">
+          <img class="is-square avatar" src="~/assets/random/1.png">
+          <div style="color:grey;">
+          @{{ article.author }}
+          </div>
+        </figure>
         <br />
         <h1>{{ article.post }}</h1>
-        {{ article.upvotes }}
 
-        <progress class="progress" value="15" max="100">15%</progress>
+        <progress class="progress" :value="article.upvotes" :max="article.upvotes+article.downvotes">15%</progress>
         <button>
           <font-awesome-icon
             icon="thumbs-down"
             style="font-size: 25px; color: hsl(204, 86%, 53%);"
           />
         </button>
-        {{ article.downvotes }}
+                        {{ article.upvotes }}
         <button>
           <font-awesome-icon
             icon="thumbs-up"
             style="font-size: 25px; color: hsl(204, 86%, 53%);"
           />
         </button>
+                {{ article.downvotes }}
       </li>
     </ul>
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" />
@@ -39,12 +42,18 @@ export default {
         {
           title: 'test 1',
           article: 'testing 1,2,3',
-          author: 'John Doe'
+          author: 'John Doe',
+          post: 'John DoeJohn DoeJohn DoeJohn Doe',
+          upvotes: 3,
+          downvotes: 9,
         },
         {
           title: 'test 2',
           article: 'testing 1,2,3, 4',
-          author: 'Bob'
+          author: 'Bob',
+          post: 'John DoeJohn DoeJohn DoeJohn Doe',
+          upvotes: 3,
+          downvotes: 9,
         }
       ]
     }
@@ -58,6 +67,12 @@ export default {
 </script>
 
 <style scoped>
+.avatar {
+  vertical-align: middle;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+}
 .container {
   margin: 0 auto;
   min-height: 100vh;

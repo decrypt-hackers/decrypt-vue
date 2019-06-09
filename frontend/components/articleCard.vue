@@ -11,9 +11,9 @@
       </div>
       <div class="card-content">
         <div class="content">
-          <h4>{{this.article.title}}</h4>
+          <h4>{{ this.article.title }}</h4>
           <p>
-            {{this.article.article}}
+            {{ this.article.article }}
           </p>
           <span class="button is-link modal-button" data-target="modal-image"
             >Image modal</span
@@ -34,7 +34,6 @@ export default {
   }
 }
 </script>
-
 
 <style>
 .container {

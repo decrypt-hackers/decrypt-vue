@@ -10,15 +10,10 @@
                 alt="Logo"
               />
             </a>
-            <span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
           </div>
           <div id="navbarMenu" class="navbar-menu">
             <div class="section">
-              <div class="field has-addons" v-if="readView">
+              <div v-if="readView" class="field has-addons">
                 <div class="control is-expanded">
                   <input
                     v-model="filter"
@@ -28,7 +23,9 @@
                   />
                 </div>
                 <div class="control">
-                  <a @click="filterView()" class="button is-light"><div id='searchtext'>Search by User</div></a>
+                  <a class="button is-light" @click="filterView()"
+                    ><div id="searchtext">Search by User</div></a
+                  >
                 </div>
               </div>
             </div>
@@ -65,11 +62,6 @@
 <script>
 export default {
   components: {},
-  data: function() {
-    return {
-      filter: ''
-    }
-  },
   props: {
     permission: {
       type: Boolean,
@@ -80,16 +72,19 @@ export default {
       required: true
     }
   },
+  data: function() {
+    return {
+      filter: ''
+    }
+  },
   methods: {
     review() {
-      this.$emit("showReview")
+      this.$emit('showReview')
     },
     read() {
-      this.$emit("showRead")
+      this.$emit('showRead')
     },
-    filterView() {
-      
-    }
+    filterView() {}
   }
 }
 </script>

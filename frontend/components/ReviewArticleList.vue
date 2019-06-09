@@ -1,14 +1,21 @@
 <template>
   <section class="container">
-      <ul>
-        <li class="list-group-item" v-for="article in articles">
-            <h2><b>@{{article.author}}</b></h2> <br />
-            <h1>{{article.post}}</h1>
-            <button><i @click="accept(article)" class="em em-white_check_mark"></i></button>
-            <button><i @click="decline(article)" class="em em-no_entry"></i></button>
-        </li>
-      </ul>
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <ul>
+      <li v-for="article in articles" class="list-group-item">
+        <h2>
+          <b>@{{ article.author }}</b>
+        </h2>
+        <br />
+        <h1>{{ article.post }}</h1>
+        {{ article.upvotes }}
+        <button><i class="em em-arrow_up" @click="upvote(article)"></i></button>
+        {{ article.downvotes }}
+        <button>
+          <i class="em em-arrow_down" @click="downvote(article)"></i>
+        </button>
+      </li>
+    </ul>
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" />
   </section>
 </template>
 
@@ -29,13 +36,12 @@ export default {
     this.displayArticles()
   },
   methods: {
-    displayArticles(){
-      var url = 'http://localhost:8080/queuedPosts'
-      this.$axios.$get(url)
-      .then((res) => {
-        this.articles = res;
-        console.log(res);
-      });
+    displayArticles() {
+      const url = 'http://localhost:8080/queuedPosts'
+      this.$axios.$get(url).then(res => {
+        this.articles = res
+        console.log(res)
+      })
     },
     accept(article) {
       window.alert('ブロックチェーンに投稿されました')
