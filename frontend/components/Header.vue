@@ -52,6 +52,7 @@
                       style="font-size: 25px; color: white;"
                     />
                   </span>
+                  <span>{{ balance }} coin</span>
                 </span>
               </div>
             </div>
@@ -65,9 +66,16 @@
 <script>
 export default {
   components: {},
+  async created() {
+    if (!this.$easy.easy) {
+      await this.$easy.enable()
+      await this.getBalance()
+    }
+  },
   data: function() {
     return {
-      filter: ''
+      filter: '',
+      balance: 0
     }
   },
   props: {
@@ -89,6 +97,21 @@ export default {
     },
     filterView() {
       
+    },
+    async getBalance() {
+      if (!this.$easy.easy) return
+
+      const address = window.ethereum.selectedAddress
+
+      const response = await this.$easy.easy.get('/api/balance', {
+        params: {
+          address
+        }
+      })
+
+      this.balance = response.data.balance
+
+      console.log('getBalance', response.data) // eslint-disable-line
     }
   }
 }

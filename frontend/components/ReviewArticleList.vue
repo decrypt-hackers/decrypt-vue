@@ -59,7 +59,7 @@ export default {
 
       var url = 'http://localhost:8080/queuedPosts/' + article._id
       article.upvotes += 1
-      article.reviewers.push()
+      // article.reviewers.push()
       this.$axios.$put(url, article)
       .then((res) => {
         console.log(res);
