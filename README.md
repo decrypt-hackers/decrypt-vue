@@ -1,5 +1,7 @@
 # D-Media: Decentralized Social Media
 
+![D-Media](https://user-images.githubusercontent.com/41976260/59153976-742dbb80-8aa2-11e9-8e64-9413d9f8f177.png)
+
 Joined a social media platform where content is not managed by a single entity, but the whole community. We implement a peer to peer reviewing system that maintains quality of content, while giving incentives to the users. We also aim to keep it as a no-ads social media as long as possible. Incentives are tied to our native token, **D-Media Coin**.
 
 The review process is as such:
