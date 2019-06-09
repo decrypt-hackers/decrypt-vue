@@ -1,16 +1,30 @@
 <template>
   <div>
-    <div class="createPost">
-      <button @click="toggle()"><h3 id="create">Submit a Post</h3></button>
+    <div align="right">
+    <div class="circle-icon">
+      <button @click="toggle()">
+         <font-awesome-icon
+                    icon="edit"
+                    style="font-size: 25px; color: white;"
+                  />
+      </button>
+    </div>
     </div>
     <div v-if="adding" class="fields">
-      <div class="maininputs">Post: <input v-model="post" type="text" /></div>
-      <div id="submit">
-        <button title="Post" @click="addPost()">Submit</button>
-        <button title="Close" @click="toggle()">Close</button>
+      <div class="maininputs">
+
+<textarea class="textarea" placeholder="Post"></textarea>
+</div>
+      <div class="level">
+        <div class="level-item">
+        <button title="Post"  style="color:white;" @click="addPost()">Submit</button>
+        </div>
+        <div class="level-item">
+        <button title="Close"  style="color:white;" @click="toggle()">Close</button>
+      </div>
       </div>
       <div v-if="!filled" class="warning">
-        <h2>Post too long!<i class="em em-angry"></i></h2>
+        <h4  style="color:white;">Post too long!<i class="em em-angry"></i></h4>
       </div>
     </div>
 
@@ -68,6 +82,16 @@ export default {
 </script>
 
 <style scoped>
+.circle-icon {
+    background-color: rgba(32, 156, 238);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 100px;
+    vertical-align: center;
+    margin-right:128px;
+}
 .fields {
   background-color: rgba(32, 156, 238, 0.8);
   margin: 10px 15px 10px 15px;
@@ -83,9 +107,11 @@ button {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 12px;
-  background-color: #209cee;
-  border-color: #209cee;
+      width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  background-color: transparent;
+  border-color: transparent;
   margin-top: 10px;
   margin-bottom: 10px;
 }
