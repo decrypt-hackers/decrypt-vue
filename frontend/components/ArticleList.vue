@@ -101,8 +101,6 @@ export default {
         { sign: true }
       )
       console.log('downvote', response.data) // eslint-disable-line
-      await this.getPosts()
-      await this.getBalance()
       this.getVote()
     }
   }
