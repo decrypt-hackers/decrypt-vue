@@ -27,7 +27,10 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/buefy'],
+  plugins: [
+    '~/plugins/buefy',
+    '~/plugins/uniqys'
+  ],
   /*
    ** Nuxt.js modules
    */
@@ -37,9 +40,21 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    // '@nuxtjs/eslint-module',
+    '@nuxtjs/proxy',
     '@nuxtjs/bulma',
     'nuxt-fontawesome'
   ],
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8081',
+      changeOrigin: true
+    },
+    '/uniqys': {
+      target: 'http://localhost:8081',
+      changeOrigin: true
+    }
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

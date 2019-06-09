@@ -23,8 +23,13 @@
                   />
                 </div>
                 <div class="control">
-                  <a class="button is-light" @click="filterView()"
-                    ><div id="searchtext">Search by User</div></a
+                  <a class="button is-dark" @click="filterView()"
+                    >
+                                        <font-awesome-icon
+                      icon="search"
+                      style="font-size: 25px; color: ;"
+                    />
+</a
                   >
                 </div>
               </div>
@@ -49,6 +54,7 @@
                       style="font-size: 25px; color: white;"
                     />
                   </span>
+                  <span>{{ balance }} coin</span>
                 </span>
               </div>
             </div>
@@ -62,6 +68,18 @@
 <script>
 export default {
   components: {},
+  async created() {
+    if (!this.$easy.easy) {
+      await this.$easy.enable()
+      await this.getBalance()
+    }
+  },
+  data: function() {
+    return {
+      filter: '',
+      balance: 0
+    }
+  },
   props: {
     permission: {
       type: Boolean,
@@ -72,11 +90,6 @@ export default {
       required: true
     }
   },
-  data: function() {
-    return {
-      filter: ''
-    }
-  },
   methods: {
     review() {
       this.$emit('showReview')
@@ -84,7 +97,22 @@ export default {
     read() {
       this.$emit('showRead')
     },
-    filterView() {}
+    filterView() {},
+    async getBalance() {
+      if (!this.$easy.easy) return
+
+      const address = window.ethereum.selectedAddress
+
+      const response = await this.$easy.easy.get('/api/balance', {
+        params: {
+          address
+        }
+      })
+
+      this.balance = response.data.balance
+
+      console.log('getBalance', response.data) // eslint-disable-line
+    }
   }
 }
 </script>

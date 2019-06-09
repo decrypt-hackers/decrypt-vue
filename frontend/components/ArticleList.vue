@@ -7,39 +7,43 @@
             <figure class="image is-128x128">
               <center>
                 <img class="is-square avatar" src="~/assets/random/3.jpg" />
-                <div style="color:grey;">@{{ article.author }}</div>
+                <div style="color:grey;">@{{ article.post.author }}</div>
               </center>
             </figure>
           </figure>
           <div class="media-content">
             <div class="content">
-              {{ article.post }}
+              {{ article.post.post }}
             </div>
+                <font-awesome-icon
+                    icon="glasses"
+                    style="font-size: 18px; color: grey;"
+                  />
+            <span style="color:grey;"> {{ article.reviewer }}</span>
             <nav class="level is-mobile">
               <div class="level-right" />
               <div class="level-left">
-                <button>
+                <button @click="downvote(article.hash)">
                   <font-awesome-icon
                     icon="thumbs-down"
                     style="font-size: 25px; color: hsl(204, 86%, 53%);"
                   />
                 </button>
-                {{ article.upvotes }}
-                <button>
+                {{ vote[article.hash] ? vote[article.hash].downvote : 0 }}
+                <button @click="upvote(article.hash)">
                   <font-awesome-icon
                     icon="thumbs-up"
                     style="font-size: 25px; color: hsl(204, 86%, 53%);"
                   />
                 </button>
-                {{ article.downvotes }}
+                {{ vote[article.hash] ? vote[article.hash].upvote : 0 }}
               </div>
             </nav>
             <progress
-              class="progress"
-              :value="article.upvotes"
-              :max="article.upvotes + article.downvotes"
-              >15%</progress
-            >
+              class="progress is-info"
+              :value="vote[article.hash] ? vote[article.hash].upvote : 0"
+              :max="(vote[article.hash] ? vote[article.hash].upvote : 0) + (vote[article.hash] ? vote[article.hash].downvote : 0)"
+              ></progress>
           </div>
         </article>
       </li>
@@ -52,32 +56,75 @@
 // import axios from 'axios'
 
 export default {
+  async created() {
+    if (!this.$easy.easy) {
+      await this.$easy.enable()
+      await this.displayArticles()
+      this.getVote()
+    }
+  },
   data() {
     return {
-      articles: [
-        {
-          title: 'test 1',
-          article: 'testing 1,2,3',
-          author: 'John Doe',
-          post: 'John DoeJohn DoeJohn DoeJohn Doe',
-          upvotes: 3,
-          downvotes: 9
-        },
-        {
-          title: 'test 2',
-          article: 'testing 1,2,3, 4',
-          author: 'Bob',
-          post: 'John DoeJohn DoeJohn DoeJohn Doe',
-          upvotes: 3,
-          downvotes: 9
-        }
-      ]
+      articles: [],
+      vote: {}
     }
   },
   methods: {
-    displayArticles() {},
-    upvote(article) {},
-    downvote(article) {}
+    async displayArticles() {
+      const response = await this.$easy.easy.get('/api/posts')
+      this.articles = response.data.posts
+      console.log(this.articles)
+    },
+    async getVote() {
+      for (const post of this.articles) {
+        const upvote = await this.getUpvote(post.hash)
+        const downvote = await this.getDownvote(post.hash)
+        this.$set(this.vote, post.hash, {
+          upvote,
+          downvote
+        })
+      }
+    },
+    async getUpvote(hash) {
+      if (!this.$easy.easy) return
+      const response = await this.$easy.easy.get('/api/upvote', {
+        params: {
+          hash
+        }
+      })
+      return response.data.upvote
+      console.log('getUpvote', response.data) // eslint-disable-line
+    },
+    async upvote(hash) {
+      if (!this.$easy.easy) return
+      const response = await this.$easy.easy.post(
+        '/api/upvote',
+        { hash },
+        { sign: true }
+      )
+      console.log('upvote', response.data) // eslint-disable-line
+      this.getVote()
+    },
+    async getDownvote(hash) {
+      if (!this.$easy.easy) return
+      const response = await this.$easy.easy.get('/api/downvote', {
+        params: {
+          hash
+        }
+      })
+      return response.data.downvote
+      console.log('getDownvote', response.data) // eslint-disable-line
+    },
+    async downvote(hash) {
+      if (!this.$easy.easy) return
+      const response = await this.$easy.easy.post(
+        '/api/downvote',
+        { hash },
+        { sign: true }
+      )
+      console.log('downvote', response.data) // eslint-disable-line
+      this.getVote()
+    }
   }
 }
 </script>

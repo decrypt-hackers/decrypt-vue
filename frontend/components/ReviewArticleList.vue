@@ -7,11 +7,9 @@
         </h2>
         <br />
         <h1>{{ article.post }}</h1>
-        {{ article.upvotes }}
-        <button><i class="em em-arrow_up" @click="upvote(article)"></i></button>
-        {{ article.downvotes }}
+        <button><i class="em em-white_check_mark" @click="accept(article)"></i></button>
         <button>
-          <i class="em em-arrow_down" @click="downvote(article)"></i>
+          <i class="em em-no_entry" @click="decline(article)"></i>
         </button>
       </li>
     </ul>
@@ -32,8 +30,11 @@ export default {
       default: 'John Doe'
     }
   },
-  created() {
+  async created() {
     this.displayArticles()
+    if (!this.$easy.easy) {
+      await this.$easy.enable()
+    }
   },
   methods: {
     displayArticles() {
@@ -43,8 +44,26 @@ export default {
         console.log(res)
       })
     },
-    accept(article) {
-      window.alert('ブロックチェーンに投稿されました')
+    async accept(article) {
+      const date = new Date()
+
+      try {
+        const response = await this.$easy.easy.post(
+          '/api/post',
+          {
+            post: {
+              hash: date.getMilliseconds(),
+              ...article
+            }
+          },
+          { sign: true }
+        )
+        window.alert('ブロックチェーンに投稿されました')
+        console.log('review', response.data)
+      } catch (e) {
+        return
+      }
+
       var url = "http://localhost:8080/queuedPosts"
       article.reviewer = this.user
       // Replace with post on blockchain

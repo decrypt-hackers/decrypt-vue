@@ -13,7 +13,7 @@
     <div v-if="adding" class="fields">
       <div class="maininputs">
 
-<textarea class="textarea" placeholder="Post"></textarea>
+<textarea v-model="post" class="textarea" placeholder="Post"></textarea>
 </div>
       <div class="level">
         <div class="level-item">

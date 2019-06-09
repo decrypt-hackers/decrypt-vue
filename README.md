@@ -44,7 +44,7 @@ Being a decentralized application, we try to let the community choose how this p
 ``` bash
 # install dependencies
 $ npm install
-
+$ npm run database
 # serve with hot reload at localhost:3000
 $ npm run dev
 
