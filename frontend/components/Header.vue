@@ -6,7 +6,7 @@
           <div class="navbar-brand">
             <a class="navbar-item" href="../">
               <img
-                src="http://bulma.io/images/bulma-type-white.png"
+                src="../assets/logo.png"
                 alt="Logo"
               />
             </a>
@@ -32,12 +32,8 @@
             <div class="navbar-end">
               <div class="tabs is-right">
                 <ul>
-                  <li :class="{ 'is-active': !readView }">
-                    <a @click="read()">Read</a>
-                  </li>
-                  <li v-if="permission" :class="{ 'is-active': readView }">
-                    <a @click="review()">Review</a>
-                  </li>
+                  <li :class="{ 'is-active' : !readView}"><a @click="read()">Read</a></li>
+                  <li :class="{ 'is-active' : !readView}" v-if="permission"><a @click="review()">Review</a></li>
                 </ul>
                 <span class="navbar-item">
                   <!-- <div class="buttons has-addons is-right">

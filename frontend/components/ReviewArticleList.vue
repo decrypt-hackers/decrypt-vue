@@ -20,12 +20,16 @@
 </template>
 
 <script>
-// import axios from 'axios'
-
 export default {
   data() {
     return {
       articles: []
+    }
+  },
+  props: {
+    user: {
+      type: String,
+      default: 'John Doe'
     }
   },
   created() {
@@ -39,20 +43,26 @@ export default {
         console.log(res)
       })
     },
-    upvote(article) {
-      const url = 'http://localhost:8080/queuedPosts/' + article._id
-      article.upvotes += 1
-      article.reviewers.push()
-      this.$axios.$put(url, article).then(res => {
-        console.log(res)
-      })
+    accept(article) {
+      window.alert('ブロックチェーンに投稿されました')
+      var url = "http://localhost:8080/queuedPosts"
+      article.reviewer = this.user
+      // Replace with post on blockchain
+      console.log(article)
+      this.$axios.$delete(url, article._id)
+      .then((res) => {
+        console.log(res);
+      });
+      this.displayArticles()
     },
-    downvote(article) {
-      const url = 'http://localhost:8080/queuedPosts/' + article._id
-      article.downvotes += 1
-      this.$axios.$put(url, article).then(res => {
-        console.log(res)
-      })
+    decline(article) {
+      window.alert('投稿を拒否しました')
+      var url = "http://localhost:8080/queuedPosts"
+      this.$axios.$delete(url, article._id)
+      .then((res) => {
+        console.log(res);
+      });
+      this.displayArticles()
     }
   }
 }

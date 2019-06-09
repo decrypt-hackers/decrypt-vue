@@ -27,6 +27,11 @@ const queuedPost = new Schema(
     ]
   },
   {
+    reviewer: {
+      type: String,
+      required: false
+    }
+},{
     collection: 'QueuedPosts'
   }
 )
