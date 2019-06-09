@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="container">
-      <uniqys-test />
       <div class="inner">
         <Header :permission="permission" :readView="read" @showReview="showReview()" @showRead="showRead()"></Header>
         <div v-if="read">
@@ -21,15 +20,13 @@ import Header from '../components/Header'
 import ReviewArticleList from '../components/ReviewArticleList'
 import ArticleList from '../components/ArticleList'
 import CreateNewPost from '../components/CreateNewpost'
-import UniqysTest from '~/components/UniqysTest.vue'
 
 export default {
   components: {
     Header,
     ReviewArticleList,
     ArticleList,
-    CreateNewPost,
-    UniqysTest
+    CreateNewPost
   },
   data() {
     return {

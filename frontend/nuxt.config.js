@@ -27,7 +27,10 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/buefy'],
+  plugins: [
+    '~/plugins/buefy',
+    '~/plugins/uniqys'
+  ],
   /*
    ** Nuxt.js modules
    */
@@ -44,11 +47,11 @@ module.exports = {
   ],
   proxy: {
     '/api': {
-      target: 'http://localhost:8080',
+      target: 'http://localhost:8081',
       changeOrigin: true
     },
     '/uniqys': {
-      target: 'http://localhost:8080',
+      target: 'http://localhost:8081',
       changeOrigin: true
     }
   },

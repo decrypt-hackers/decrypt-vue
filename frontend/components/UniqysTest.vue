@@ -46,7 +46,14 @@ export default {
       const date = new Date()
       const response = await this.easy.post(
         '/api/post',
-        { post: { hash: date.getMilliseconds() } },
+        {
+          post: {
+            hash: date.getMilliseconds(),
+            title: 'test 1',
+            article: 'testing ' + new Date(),
+            author: 'John Doe'
+          }
+        },
         { sign: true }
       )
       this.getBalance()
