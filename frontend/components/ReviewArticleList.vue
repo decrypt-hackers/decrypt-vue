@@ -1,16 +1,21 @@
 <template>
   <section class="container">
-      <ul>
-        <li class="list-group-item" v-for="article in articles">
-            <h2><b>@{{article.author}}</b></h2> <br />
-            <h1>{{article.post}}</h1>
-            {{article.upvotes}}
-            <button><i @click="upvote(article)" class="em em-arrow_up"></i></button>
-            {{article.downvotes}}
-            <button><i @click="downvote(article)" class="em em-arrow_down"></i></button>
-        </li>
-      </ul>
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <ul>
+      <li v-for="article in articles" class="list-group-item">
+        <h2>
+          <b>@{{ article.author }}</b>
+        </h2>
+        <br />
+        <h1>{{ article.post }}</h1>
+        {{ article.upvotes }}
+        <button><i class="em em-arrow_up" @click="upvote(article)"></i></button>
+        {{ article.downvotes }}
+        <button>
+          <i class="em em-arrow_down" @click="downvote(article)"></i>
+        </button>
+      </li>
+    </ul>
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" />
   </section>
 </template>
 
@@ -27,30 +32,27 @@ export default {
     this.displayArticles()
   },
   methods: {
-    displayArticles(){
-      var url = 'http://localhost:8080/queuedPosts'
-      this.$axios.$get(url)
-      .then((res) => {
-        this.articles = res;
-        console.log(res);
-      });
+    displayArticles() {
+      const url = 'http://localhost:8080/queuedPosts'
+      this.$axios.$get(url).then(res => {
+        this.articles = res
+        console.log(res)
+      })
     },
     upvote(article) {
-      var url = 'http://localhost:8080/queuedPosts/' + article._id
+      const url = 'http://localhost:8080/queuedPosts/' + article._id
       article.upvotes += 1
       article.reviewers.push()
-      this.$axios.$put(url, article)
-      .then((res) => {
-        console.log(res);
-      });
+      this.$axios.$put(url, article).then(res => {
+        console.log(res)
+      })
     },
     downvote(article) {
-      var url = 'http://localhost:8080/queuedPosts/' + article._id
+      const url = 'http://localhost:8080/queuedPosts/' + article._id
       article.downvotes += 1
-      this.$axios.$put(url, article)
-      .then((res) => {
-        console.log(res);
-      });
+      this.$axios.$put(url, article).then(res => {
+        console.log(res)
+      })
     }
   }
 }

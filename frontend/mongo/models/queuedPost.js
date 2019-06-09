@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const queuedPost = new Schema({
+const queuedPost = new Schema(
+  {
     author: {
       type: String,
       required: true
@@ -24,8 +25,10 @@ const queuedPost = new Schema({
         required: false
       }
     ]
-},{
+  },
+  {
     collection: 'QueuedPosts'
-})
+  }
+)
 
-module.exports = mongoose.model('QueuedPosts', queuedPost);
+module.exports = mongoose.model('QueuedPosts', queuedPost)
