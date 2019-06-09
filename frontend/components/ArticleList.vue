@@ -1,16 +1,31 @@
 <template>
   <section class="container">
-      <ul>
-        <li class="list-group-item" v-for="article in articles">
-            <h2><b>@{{article.author}}</b></h2> <br />
-            <h1>{{article.post}}</h1>
-            {{article.upvotes}}
-            <button><i @click="upvote(article)" class="em em-arrow_up"></i></button>
-            {{article.downvotes}}
-            <button><i @click="downvote(article)" class="em em-arrow_down"></i></button>
-        </li>
-      </ul>
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <ul>
+      <li v-for="article in articles" class="list-group-item">
+        <h2>
+          <b>@{{ article.author }}</b>
+        </h2>
+        <br />
+        <h1>{{ article.post }}</h1>
+        {{ article.upvotes }}
+
+        <progress class="progress" value="15" max="100">15%</progress>
+        <button>
+          <font-awesome-icon
+            icon="thumbs-down"
+            style="font-size: 25px; color: hsl(204, 86%, 53%);"
+          />
+        </button>
+        {{ article.downvotes }}
+        <button>
+          <font-awesome-icon
+            icon="thumbs-up"
+            style="font-size: 25px; color: hsl(204, 86%, 53%);"
+          />
+        </button>
+      </li>
+    </ul>
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" />
   </section>
 </template>
 
@@ -35,15 +50,9 @@ export default {
     }
   },
   methods: {
-    displayArticles(){
-      
-    },
-    upvote(article) {
-     
-    },
-    downvote(article) {
-      
-    }
+    displayArticles() {},
+    upvote(article) {},
+    downvote(article) {}
   }
 }
 </script>
