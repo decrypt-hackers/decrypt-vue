@@ -2,7 +2,7 @@
 
 ![D-Media](https://user-images.githubusercontent.com/41976260/59153976-742dbb80-8aa2-11e9-8e64-9413d9f8f177.png)
 
-Joined a social media platform where content is not managed by a single entity, but the whole community. We implement a peer to peer reviewing system that maintains quality of content, while giving incentives to the users. We also aim to keep it as a no-ads social media as long as possible. Incentives are tied to our native token, **D-Media Coin**.
+Join a social media platform where content is not managed by a single entity, but the whole community. We implement a peer to peer reviewing system that maintains quality of content, while giving incentives to the users. We also aim to keep it as a no-ads social media as long as possible. Incentives are tied to our native token, **D-Media Coin**.
 
 The review process is as such:
 
@@ -17,6 +17,7 @@ _Reviewer and Poster rewarded according to public votes_
 ##### This project is a submission for Decrypt Tokyo 2019 : https://decrypt.tokyo/
 ## Stack Used
 - Vue.js & Nuxt.js (front-end)
+- Express.js (requests)
 - MongoDB (off-chain database)
 - Uniqys Kit (connection to ethereum)
 
@@ -38,7 +39,7 @@ The parameters that should be tuned throughout are the rewards for each of the t
 ### Other Considerations
 Being a decentralized application, we try to let the community choose how this platform will behave. Therefore, we believe that we want to provide a platform with no ads! The hope is to fine-tune the above mentioned parameters so that social media influencers can make a living without the need of sponsored content that we see in all centralized social media platforms today.
 
-## Build Setup
+## Build Setup (To Be Updated)
 
 ``` bash
 # install dependencies
