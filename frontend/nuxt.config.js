@@ -27,7 +27,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/buefy'],
   /*
    ** Nuxt.js modules
    */
@@ -38,7 +38,9 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/eslint-module',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
+    '@nuxtjs/bulma',
+    'nuxt-fontawesome'
   ],
   proxy: {
     '/api': {
@@ -55,6 +57,14 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  fontawesome: {
+    imports: [
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
+      }
+    ]
+  },
   /*
    ** Build configuration
    */
@@ -66,6 +76,7 @@ module.exports = {
         }
       }
     },
+    vendor: ['buefy'],
     /*
      ** You can extend webpack config here
      */

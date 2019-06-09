@@ -1,5 +1,6 @@
 const express = require('express')
 const consola = require('consola')
+const cors = require('cors')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
 
@@ -23,6 +24,7 @@ async function start() {
 
   // Give nuxt middleware to express
   app.use(nuxt.render)
+  app.use(cors())
 
   // Listen the server
   app.listen(port, host)
