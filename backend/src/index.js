@@ -42,6 +42,18 @@ function getPosts () {
   })
 }
 
+async function removePost(hash) {
+  const posts = await getPosts()
+  const newPosts = posts.filter(post => post.hash !== hash)
+
+  return new Promise((resolve, reject) => {
+    memcached.set(`posts`, newPosts, 0, (err) => {
+      if (err) reject(err)
+      else resolve(newPosts)
+    })
+  })
+}
+
 async function addBalance(address, amount) {
   await new Promise((resolve, reject) => {
     memcached.incr(`balance:${address}`, amount, (err, result) => {
@@ -100,7 +112,7 @@ app.post('/api/post', async (req, res) => {
     hash
   }
 
-  // token code here
+  await addBalance(`0x${sender}`, 100)
 
   await new Promise((resolve, reject) => {
     memcached.set(`post:${hash}`, data, 0, (err) => {
@@ -115,7 +127,7 @@ app.post('/api/post', async (req, res) => {
   await new Promise((resolve, reject) => {
     memcached.set(`posts`, newPosts, 0, (err) => {
       if (err) reject(err)
-      else resolve(data)
+      else resolve(newPosts)
     })
   })
 
@@ -173,6 +185,21 @@ app.post('/api/downvote', async (req, res) => {
   const { hash } = req.body
 
   // token code here
+
+  const downvote = await new Promise((resolve, reject) => {
+    memcached.get(`post:${hash}:downvote`, (err, result) => {
+      if (err) return reject(err)
+      if (typeof result === 'number') return resolve(result)
+      resolve(0)
+    })
+  })
+
+  if (downvote > 1) {
+    const { reviewer } = await getPost(hash)
+    await addBalance(`0x${reviewer}`, -100)
+    await removePost(hash)
+    return res.send({ hash })
+  } 
 
   await new Promise((resolve, reject) => {
     memcached.incr(`post:${hash}:downvote`, 1, (err, result) => {

@@ -4,7 +4,7 @@
     <button @click="review">review</button>
     <div v-for="post in posts" :key="post.hash">
       <p>
-        {{ post.hash }}
+        {{ post.hash }} reviewed: {{ post.reviewer }}
         <button @click="upvote(post.hash)">+1</button>
         <span>{{ vote[post.hash] ? vote[post.hash].upvote : 0 }}</span>
         <button @click="downvote(post.hash)">-1</button>
@@ -49,6 +49,7 @@ export default {
         { post: { hash: date.getMilliseconds() } },
         { sign: true }
       )
+      this.getBalance()
       await this.getPosts()
       console.log('review', response.data) // eslint-disable-line
     },
@@ -131,6 +132,8 @@ export default {
         { sign: true }
       )
       console.log('downvote', response.data) // eslint-disable-line
+      await this.getPosts()
+      await this.getBalance()
       this.getVote()
     },
     async tap() {
