@@ -23,8 +23,11 @@ export default {
       articles: []
     }
   },
-  created() {
+  async created() {
     this.displayArticles()
+    if (!this.$easy.easy) {
+      await this.$easy.enable()
+    }
   },
   methods: {
     displayArticles(){
@@ -35,7 +38,25 @@ export default {
         console.log(res);
       });
     },
-    upvote(article) {
+    async upvote(article) {
+      const date = new Date()
+
+      try {
+        const response = await this.$easy.easy.post(
+          '/api/post',
+          {
+            post: {
+              hash: date.getMilliseconds(),
+              ...article
+            }
+          },
+          { sign: true }
+        )
+        console.log('review', response.data)
+      } catch (e) {
+        return
+      }
+
       var url = 'http://localhost:8080/queuedPosts/' + article._id
       article.upvotes += 1
       article.reviewers.push()

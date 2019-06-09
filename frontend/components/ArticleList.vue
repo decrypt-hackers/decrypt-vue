@@ -6,7 +6,7 @@
           <b>@{{ article.post.author }}</b>
         </h2>
         <br />
-        <h1>{{ article.post.article }}</h1>
+        <h1>{{ article.post.post }}</h1>
         <p>reviewer: {{ article.reviewer }}</p>
 
         <progress class="progress" value="15" max="100">15%</progress>
@@ -51,6 +51,7 @@ export default {
     async displayArticles() {
       const response = await this.$easy.easy.get('/api/posts')
       this.articles = response.data.posts
+      console.log(this.articles)
     },
     async getVote() {
       for (const post of this.articles) {
