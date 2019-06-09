@@ -10,20 +10,10 @@ const queuedPost = new Schema({
       type: String,
       required: true
     },
-    downvotes: {
-      type: Number,
-      default: 0
-    },
-    upvotes: {
-      type: Number,
-      default: 0
-    },
-    upReviewers: [
-      {
-        type: String,
-        required: false
-      }
-    ]
+    reviewer: {
+      type: String,
+      required: false
+    }
 },{
     collection: 'QueuedPosts'
 })
